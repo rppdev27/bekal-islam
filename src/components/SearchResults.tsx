@@ -52,16 +52,16 @@ export const SearchResults: React.FC<SearchResultsProps> = ({
           </div>
           
           <p className="mt-2 text-xs text-gray-500">
-            Click to view full context
+            Klik untuk melihat konteks secara lengkap
           </p>
         </div>
       ))}
       
       {results.length === 0 && (
         <div className="text-center py-8">
-          <p className="text-gray-500 mb-2">No results found</p>
+          <p className="text-gray-500 mb-2">Tidak ada konten yang ditemukan</p>
           <p className="text-sm text-gray-400">
-            Try using different keywords or checking for typos
+          Coba gunakan kata kunci yang berbeda 
           </p>
         </div>
       )}

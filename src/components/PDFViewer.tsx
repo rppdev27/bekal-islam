@@ -109,7 +109,7 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ url }) => {
       <Modal
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
-        title="Search Results"
+        title="Hasil Pencarian"
       >
         <SearchResults
           results={searchResults}
