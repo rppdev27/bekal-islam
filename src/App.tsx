@@ -1,4 +1,3 @@
-import React from 'react';
 import { PDFViewer } from './components/PDFViewer';
 import { books } from './data/books';
 

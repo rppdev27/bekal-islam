@@ -43,24 +43,33 @@ export const Sidebar: React.FC<SidebarProps> = ({
       >
         <div className="h-full flex flex-col">
           <div className="p-4 border-b">
-            <form onSubmit={handleSearch} className="relative">
-              <input
-                type="text"
-                placeholder="Cari..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-              />
-              <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
+            <form onSubmit={handleSearch} className="relative flex gap-2">
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  placeholder="Cari..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#005f44] text-sm"
+                />
+                <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
+              </div>
+              <button 
+                type="submit"
+                className="px-4 py-2 bg-[#005f44] text-white rounded-lg hover:bg-[#004d38] transition-colors duration-200 text-sm flex items-center gap-2"
+              >
+                Cari
+                <Search className="w-4 h-4" />
+              </button>
             </form>
           </div>
-          
+         
           <div className="flex-1 overflow-auto p-4">
             <h3 className="font-semibold mb-4 flex items-center gap-2 text-sm">
               <BookOpen className="w-4 h-4" />
               Daftar Isi
             </h3>
-            <TableOfContents 
+            <TableOfContents
               onPageSelect={onPageChange}
               currentPage={currentPage}
             />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Book, User, Heart, Bookmark, ChevronRight } from 'lucide-react';
+import { Book, User, Heart, ChevronRightCircleIcon, ChevronRight, ArrowBigRight, DotIcon } from 'lucide-react';
 
 interface Chapter {
   id: number;
@@ -14,46 +14,46 @@ const chapters: Chapter[] = [
     id: 1,
     title: "Sejarah Syaikh Muhammad bin Abdul Wahhab رحمه الله",
     page: 1,
-    icon: <User className="w-4 h-4" />
+    icon: <ArrowBigRight className="w-4 h-4" />
   },
   {
     id: 2,
     title: "Ciri-Ciri Dakwah Syaikh Muhammad Bin Abdul Wahhab",
     page: 13,
-    icon: <Heart className="w-4 h-4" />
+    icon: <ArrowBigRight className="w-4 h-4" />
   },
   {
     id: 3,
     title: "Syarh al-Ushul Ats-Tsalatsah (Tiga Landasan Pokok Agama)",
     page: 1,
-    icon: <Book className="w-4 h-4" />
+    icon: <ArrowBigRight className="w-4 h-4" />
   },
   {
     id: 4,
     title: "Pokok Pertama: Mengenal Allah",
     page: 67,
-    icon: <Bookmark className="w-4 h-4" />,
+    icon: <ArrowBigRight className="w-4 h-4" />,
     isSubchapter: true
   },
   {
     id: 5,
     title: "Pokok Kedua: Mengenal Agama Islam",
     page: 105,
-    icon: <Bookmark className="w-4 h-4" />,
+    icon: <ArrowBigRight className="w-4 h-4" />,
     isSubchapter: true
   },
   {
     id: 6,
     title: "Pokok Ketiga: Mengenal Nabi ﷺ",
     page: 133,
-    icon: <Bookmark className="w-4 h-4" />,
+    icon: <ArrowBigRight className="w-4 h-4" />,
     isSubchapter: true
   },
   {
     id: 7,
     title: "Syarah 4 Kaidah Penting Memahami Tauhid",
     page: 175,
-    icon: <Book className="w-4 h-4" />
+    icon: <ArrowBigRight className="w-4 h-4" />
   }
 ];
 
