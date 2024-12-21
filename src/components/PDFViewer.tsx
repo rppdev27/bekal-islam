@@ -57,11 +57,7 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ url }) => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100"
-      style={{
-        fontFamily: 'Kanit'
-      }}
-    >
+    <div className="flex h-screen bg-gray-100">
       <Sidebar
         currentPage={currentPage}
         numPages={numPages}
