@@ -78,9 +78,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </div>
       <button
         onClick={onToggle}
-        className="fixed bottom-4 right-4 lg:hidden z-40 p-3 bg-white rounded-full shadow-lg hover:bg-gray-100 transition-colors"
+        className="fixed bottom-4 right-4 lg:hidden z-40 p-2 bg-green-800 rounded-md shadow-lg hover:bg-green-900 transition-colors text-white"
       >
-        {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        {/* {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />} */}
+        {isOpen ? <X className="w-6 h-6" /> : <div className='flex flex-row items-center justify-center text-xs align-middle'><Menu size={15} className='mr-1'/>Daftar Isi</div> }
       </button>
     </>
   );
