@@ -49,7 +49,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       >
         <div className="h-full flex flex-col">
           <div className="p-4 border-b">
-            <form onSubmit={handleSearch} className="flex gap-2">
+            <form onSubmit={handleSearch} className="flex gap-2 flex-row">
               <input
                 type="text"
                 placeholder="Cari..."
