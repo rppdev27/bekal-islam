@@ -50,17 +50,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
         <div className="h-full flex flex-col">
         {isOpen && ( // Only render the form if the sidebar is open
           <div className="p-4 border-b">
-            <form onSubmit={handleSearch} className="flex gap-2 items-center">
+            <form onSubmit={handleSearch} className="flex gap-2 items-center flex-row">
               <input
                 type="text"
                 placeholder="Cari..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 text-sm"
+                className="flex-0 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 w-3/4 text-sm"
               />
               <button
                 type="submit"
-                className="flex items-center justify-center px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
+                className="w-1/4 flex items-center justify-center px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
               >
                 <Search size={16} />
               </button>
