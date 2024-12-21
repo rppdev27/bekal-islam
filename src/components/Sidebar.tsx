@@ -1,11 +1,10 @@
-import React from 'react';
-import { Search, Menu, X, BookOpen } from 'lucide-react';
-import { TableOfContents } from './TableOfContents';
+import React, { useState } from 'react';
+import { Search, Book, X } from 'lucide-react';
+import { chapters } from '../data/chapters';
 import clsx from 'clsx';
 
 interface SidebarProps {
   currentPage: number;
-  numPages: number;
   onPageChange: (page: number) => void;
   onSearch: (query: string) => void;
   isOpen: boolean;
@@ -19,16 +18,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isOpen,
   onToggle,
 }) => {
-  const [searchQuery, setSearchQuery] = React.useState('');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     onSearch(searchQuery);
   };
 
-  const handlePageSelect = (page: number) => {
+  const handlePageClick = (page: number) => {
     onPageChange(page);
-    // No need to call onToggle here since the PDFViewer will handle closing the sidebar
+    if (window.innerWidth < 1024) { // Only close on mobile
+      onToggle();
+    }
   };
 
   return (
@@ -48,45 +49,73 @@ export const Sidebar: React.FC<SidebarProps> = ({
       >
         <div className="h-full flex flex-col">
           <div className="p-4 border-b">
-            <form onSubmit={handleSearch} className="relative flex gap-2">
-              <div className="relative flex-1">
-                <input
-                  type="text"
-                  placeholder="Cari..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#005f44] text-sm"
-                />
-                <Search className="absolute left-3 top-2.5 w-4 h-4 text-gray-400" />
-              </div>
-              <button 
+            <form onSubmit={handleSearch} className="flex gap-2">
+              <input
+                type="text"
+                placeholder="Cari..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-600 text-sm"
+              />
+              <button
                 type="submit"
-                className="px-4 py-2 bg-[#005f44] text-white rounded-lg hover:bg-[#004d38] transition-colors duration-200 text-sm flex items-center gap-2"
+                className="px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
               >
-                Cari
-                <Search className="w-4 h-4" />
+                <Search size={12}/>
               </button>
             </form>
           </div>
-         
+          
           <div className="flex-1 overflow-auto p-4">
-            <h3 className="font-semibold mb-4 flex items-center gap-2 text-sm">
-              <BookOpen className="w-4 h-4" />
-              Daftar Isi
-            </h3>
-            <TableOfContents
-              onPageSelect={handlePageSelect}
-              currentPage={currentPage}
-            />
+            <div className="space-y-1">
+              {chapters.map((chapter) => (
+                <div key={chapter.id}>
+                  <button
+                    onClick={() => handlePageClick(chapter.page)}
+                    className={clsx(
+                      "w-full text-left px-3 py-2 rounded-lg text-sm transition-colors flex items-center gap-2",
+                      currentPage === chapter.page
+                        ? "bg-green-50 text-green-600"
+                        : "hover:bg-gray-100"
+                    )}
+                  >
+                    <chapter.icon className="w-4 h-4 shrink-0" />
+                    <span className="flex-1">{chapter.title}</span>
+                    <span className="text-gray-400 text-xs">{chapter.page}</span>
+                  </button>
+                  
+                  {chapter.subchapters?.map((subchapter) => (
+                    <button
+                      key={subchapter.id}
+                      onClick={() => handlePageClick(subchapter.page)}
+                      className={clsx(
+                        "w-full text-left pl-9 pr-3 py-2 rounded-lg text-sm transition-colors flex items-center gap-2",
+                        currentPage === subchapter.page
+                          ? "bg-green-50 text-green-600"
+                          : "hover:bg-gray-100"
+                      )}
+                    >
+                      <subchapter.icon className="w-4 h-4 shrink-0" />
+                      <span className="flex-1">{subchapter.title}</span>
+                      <span className="text-gray-400 text-xs">{subchapter.page}</span>
+                    </button>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
+
       <button
         onClick={onToggle}
-        className="fixed bottom-4 right-4 lg:hidden z-40 p-2 bg-green-800 rounded-md shadow-lg hover:bg-green-900 transition-colors text-white"
+        className="fixed right-8 bottom-8 z-40 lg:hidden px-4 py-2 bg-green-800 text-white text-sm font-medium hover:bg-green-900 transition-colors rounded-lg shadow-sm flex items-center gap-2"
       >
-        {/* {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />} */}
-        {isOpen ? <X className="w-6 h-6" /> : <div className='flex flex-row items-center justify-center text-xs align-middle'><Menu size={15} className='mr-1'/>Daftar Isi</div> }
+        
+        {
+          isOpen ? <X size={15} className='font-bold'/> : <><Book className="w-4 h-4" />
+        Daftar Isi</>
+        }
       </button>
     </>
   );

@@ -12,7 +12,7 @@ interface Chapter {
 const chapters: Chapter[] = [
   {
     id: 1,
-    title: "Sejarah Syaikh Muhammad bin Abdul Wahhab رحمه الله",
+    title: "Sejarah ssSyaikh Muhammad bin Abdul Wahhab رحمه الله",
     page: 1,
     icon: <ArrowBigRight className="w-4 h-4" />
   },

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Sidebar } from './Sidebar';
 import { Modal } from './Modal';
 import { SearchResults } from './SearchResults';
+import { NavigationControls } from './NavigationControls';
 import { searchPDF, SearchResult } from '../utils/pdfSearch';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
@@ -46,33 +46,13 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ url }) => {
     }
   };
 
-  // const handlePageChange = (page: number) => {
-  //   setCurrentPage(page);
-  //   setIsSearchOpen(false);
-  //   // Scroll to the selected page
-  //   const pageElement = document.getElementById(`page-${page}`);
-  //   if (pageElement) {
-  //     pageElement.scrollIntoView({ behavior: 'smooth' });
-  //   }
-  // };
-
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     setIsSearchOpen(false);
-    setIsSidebarOpen(false); // Add this line to close the sidebar
-    // Scroll to the selected page
-    const pageElement = document.getElementById(`page-${page}`);
-    if (pageElement) {
-      pageElement.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 
   return (
-    <div className="flex h-screen bg-gray-100"
-      style={{
-        fontFamily: 'Kanit'
-      }}
-    >
+    <div className="flex h-screen bg-gray-100">
       <Sidebar
         currentPage={currentPage}
         numPages={numPages}
@@ -82,28 +62,8 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ url }) => {
         onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
       />
 
-      <div className="flex-1 flex flex-col">
-        <div className="sticky top-0 z-10 bg-white border-b p-2 sm:p-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 sm:gap-4">
-            <button
-              onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-              disabled={currentPage <= 1}
-              className="p-1 sm:p-2 hover:bg-gray-100 rounded-lg disabled:opacity-50 transition-colors"
-            >
-              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-            {/* <span className="text-sm sm:text-base">
-              Page {currentPage} of {numPages}
-            </span> */}
-            <button
-              onClick={() => handlePageChange(Math.min(numPages, currentPage + 1))}
-              disabled={currentPage >= numPages}
-              className="p-1 sm:p-2 hover:bg-gray-100 rounded-lg disabled:opacity-50 transition-colors"
-            >
-              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
-          </div>
-          
+      <div className="flex-1 overflow-auto">
+        <div className="sticky top-0 z-10 bg-white border-b p-2 sm:p-4 flex items-center justify-end">
           <div className="flex items-center gap-2 sm:gap-4">
             <button
               onClick={() => setScale(Math.max(0.5, scale - 0.1))}
@@ -123,30 +83,27 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ url }) => {
           </div>
         </div>
 
-        <div className="flex-1 overflow-auto">
+        <div className="flex justify-center p-4 sm:p-8">
           <Document
             file={url}
             onLoadSuccess={onDocumentLoadSuccess}
-            className="flex flex-col items-center gap-4 p-4 sm:p-8"
+            className="shadow-xl max-w-full"
           >
-            {Array.from(new Array(numPages), (_, index) => (
-              <div
-                key={`page-${index + 1}`}
-                id={`page-${index + 1}`}
-                className="shadow-xl"
-                onMouseEnter={() => setCurrentPage(index + 1)}
-              >
-                <Page
-                  pageNumber={index + 1}
-                  scale={scale}
-                  className="bg-white"
-                  width={Math.min(window.innerWidth - 64, 800)}
-                />
-              </div>
-            ))}
+            <Page
+              pageNumber={currentPage}
+              scale={scale}
+              className="bg-white max-w-full"
+              width={Math.min(window.innerWidth - 64, 800)}
+            />
           </Document>
         </div>
       </div>
+
+      <NavigationControls
+        currentPage={currentPage}
+        numPages={numPages}
+        onPageChange={handlePageChange}
+      />
 
       <Modal
         isOpen={isSearchOpen}
