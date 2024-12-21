@@ -55,14 +55,13 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ url }) => {
     <div className="flex h-screen bg-gray-100">
       <Sidebar
         currentPage={currentPage}
-        numPages={numPages}
         onPageChange={handlePageChange}
         onSearch={handleSearch}
         isOpen={isSidebarOpen}
         onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
       />
 
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 flex flex-col">
         <div className="sticky top-0 z-10 bg-white border-b p-2 sm:p-4 flex items-center justify-end">
           <div className="flex items-center gap-2 sm:gap-4">
             <button
@@ -83,19 +82,21 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ url }) => {
           </div>
         </div>
 
-        <div className="flex justify-center p-4 sm:p-8">
-          <Document
-            file={url}
-            onLoadSuccess={onDocumentLoadSuccess}
-            className="shadow-xl max-w-full"
-          >
-            <Page
-              pageNumber={currentPage}
-              scale={scale}
-              className="bg-white max-w-full"
-              width={Math.min(window.innerWidth - 64, 800)}
-            />
-          </Document>
+        <div className="flex-1 overflow-auto">
+          <div className="min-h-full flex items-center justify-center p-4 sm:p-8">
+            <Document
+              file={url}
+              onLoadSuccess={onDocumentLoadSuccess}
+              className="shadow-xl max-w-full"
+            >
+              <Page
+                pageNumber={currentPage}
+                scale={scale}
+                className="bg-white max-w-full"
+                width={Math.min(window.innerWidth - 64, 800)}
+              />
+            </Document>
+          </div>
         </div>
       </div>
 
