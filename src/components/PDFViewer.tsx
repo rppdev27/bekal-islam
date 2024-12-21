@@ -46,9 +46,20 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ url }) => {
     }
   };
 
+  // const handlePageChange = (page: number) => {
+  //   setCurrentPage(page);
+  //   setIsSearchOpen(false);
+  //   // Scroll to the selected page
+  //   const pageElement = document.getElementById(`page-${page}`);
+  //   if (pageElement) {
+  //     pageElement.scrollIntoView({ behavior: 'smooth' });
+  //   }
+  // };
+
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     setIsSearchOpen(false);
+    setIsSidebarOpen(false); // Add this line to close the sidebar
     // Scroll to the selected page
     const pageElement = document.getElementById(`page-${page}`);
     if (pageElement) {

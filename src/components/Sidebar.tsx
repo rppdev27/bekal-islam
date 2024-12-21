@@ -26,6 +26,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
     onSearch(searchQuery);
   };
 
+  const handlePageSelect = (page: number) => {
+    onPageChange(page);
+    // No need to call onToggle here since the PDFViewer will handle closing the sidebar
+  };
+
   return (
     <>
       <div
@@ -70,7 +75,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               Daftar Isi
             </h3>
             <TableOfContents
-              onPageSelect={onPageChange}
+              onPageSelect={handlePageSelect}
               currentPage={currentPage}
             />
           </div>
