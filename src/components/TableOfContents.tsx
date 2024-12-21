@@ -1,34 +1,89 @@
 import React from 'react';
-import { X } from 'lucide-react';
-import { Button } from './Button';
-import type { NavItem } from '../types';
+import { Book, User, Heart, Bookmark, ChevronRight } from 'lucide-react';
+
+interface Chapter {
+  id: number;
+  title: string;
+  page: number;
+  icon?: React.ReactNode;
+  isSubchapter?: boolean;
+}
+
+const chapters: Chapter[] = [
+  {
+    id: 1,
+    title: "Sejarah Syaikh Muhammad bin Abdul Wahhab رحمه الله",
+    page: 1,
+    icon: <User className="w-4 h-4" />
+  },
+  {
+    id: 2,
+    title: "Ciri-Ciri Dakwah Syaikh Muhammad Bin Abdul Wahhab",
+    page: 13,
+    icon: <Heart className="w-4 h-4" />
+  },
+  {
+    id: 3,
+    title: "Syarh al-Ushul Ats-Tsalatsah (Tiga Landasan Pokok Agama)",
+    page: 1,
+    icon: <Book className="w-4 h-4" />
+  },
+  {
+    id: 4,
+    title: "Pokok Pertama: Mengenal Allah",
+    page: 67,
+    icon: <Bookmark className="w-4 h-4" />,
+    isSubchapter: true
+  },
+  {
+    id: 5,
+    title: "Pokok Kedua: Mengenal Agama Islam",
+    page: 105,
+    icon: <Bookmark className="w-4 h-4" />,
+    isSubchapter: true
+  },
+  {
+    id: 6,
+    title: "Pokok Ketiga: Mengenal Nabi ﷺ",
+    page: 133,
+    icon: <Bookmark className="w-4 h-4" />,
+    isSubchapter: true
+  },
+  {
+    id: 7,
+    title: "Syarah 4 Kaidah Penting Memahami Tauhid",
+    page: 175,
+    icon: <Book className="w-4 h-4" />
+  }
+];
 
 interface TableOfContentsProps {
-  toc: NavItem[];
-  onSelect: (href: string) => void;
-  onClose: () => void;
+  onPageSelect: (page: number) => void;
+  currentPage: number;
 }
 
-export function TableOfContents({ toc, onSelect, onClose }: TableOfContentsProps) {
+export const TableOfContents: React.FC<TableOfContentsProps> = ({
+  onPageSelect,
+  currentPage
+}) => {
   return (
-    <div className="absolute left-0 top-0 z-20 h-full w-64 bg-white shadow-lg">
-      <div className="flex items-center justify-between p-4 border-b">
-        <h2 className="text-lg font-semibold">Contents</h2>
-        <Button variant="ghost" onClick={onClose} aria-label="Close table of contents">
-          <X className="w-5 h-5" />
-        </Button>
-      </div>
-      <nav className="p-4 space-y-2 overflow-y-auto max-h-[calc(100%-4rem)]">
-        {toc.map((item, index) => (
-          <button
-            key={index}
-            onClick={() => onSelect(item.href)}
-            className="block w-full text-left px-2 py-1.5 rounded hover:bg-gray-100 text-sm"
-          >
-            {item.label}
-          </button>
-        ))}
-      </nav>
+    <div className="space-y-1">
+      {chapters.map((chapter) => (
+        <button
+          key={chapter.id}
+          onClick={() => onPageSelect(chapter.page)}
+          className={`w-full text-right px-3 py-2 rounded-lg text-sm transition-colors flex items-center gap-2 
+            ${currentPage === chapter.page
+              ? "bg-blue-50 text-blue-600"
+              : "hover:bg-gray-100"
+            } ${chapter.isSubchapter ? "pl-8" : ""}`}
+        >
+          {chapter.icon}
+          <span className="flex-1 text-left">{chapter.title}</span>
+          <span className="text-gray-400 text-xs">{chapter.page}</span>
+          <ChevronRight className="w-4 h-4 text-gray-400" />
+        </button>
+      ))}
     </div>
   );
-}
+};
