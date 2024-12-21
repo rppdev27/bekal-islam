@@ -81,9 +81,9 @@ export const PDFViewer: React.FC<PDFViewerProps> = ({ url }) => {
             >
               <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
-            <span className="text-sm sm:text-base">
+            {/* <span className="text-sm sm:text-base">
               Page {currentPage} of {numPages}
-            </span>
+            </span> */}
             <button
               onClick={() => handlePageChange(Math.min(numPages, currentPage + 1))}
               disabled={currentPage >= numPages}
